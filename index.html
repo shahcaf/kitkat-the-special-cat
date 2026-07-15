@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>In Loving Memory of Kit Kat</title>
+    
+    <!-- Google Fonts for elegant typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Soft, warm color palette */
+            --bg-cream: #FCFBF9;
+            --bg-beige: #F5EBE1;
+            --text-dark: #5C4A3D;
+            --text-light: #8A7A6E;
+            --accent-brown: #C19A6B;
+            --accent-light: #E8D8C3;
+            --shadow: 0 10px 30px rgba(92, 74, 61, 0.08);
+            --shadow-hover: 0 15px 40px rgba(92, 74, 61, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+            /* Subtle background gradients */
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(193, 154, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(245, 235, 225, 0.6) 0%, transparent 50%);
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Lora', serif;
+        }
+
+        /* Scroll Animation Utility */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+            will-change: opacity, visibility;
+        }
+
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, var(--bg-beige) 0%, transparent 100%);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1.2s forwards 0.3s;
+            font-weight: 500;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            max-width: 700px;
+            color: var(--text-light);
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1.2s forwards 0.8s;
+        }
+
+        .paw-dec {
+            font-size: 2rem;
+            margin: 2.5rem auto 0;
+            opacity: 0;
+            animation: fadeIn 2s forwards 1.5s;
+            color: var(--accent-brown);
+        }
+
+        /* General Section Layout */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3.5rem;
+            color: var(--text-dark);
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .section-title::after {
+            content: '🐾';
+            display: block;
+            font-size: 1.2rem;
+            margin-top: 0.8rem;
+            color: var(--accent-brown);
+            opacity: 0.4;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        /* About Section */
+        .about {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            padding: 4rem;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text .section-title {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text .section-title::after {
+            display: none;
+        }
+
+        .about-text p {
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .about-img-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        /* Using placeholder images of tabby cats similar to Kit Kat */
+        .about-img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            transition: transform 0.5s ease;
+        }
+        
+        .about-img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Photo Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+        }
+
+        .gallery-img:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Timeline Section */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background-color: var(--accent-light);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1.5px;
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            padding: 20px 50px;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            right: -9px;
+            background-color: var(--bg-cream);
+            border: 4px solid var(--accent-brown);
+            top: 40px;
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 0 5px rgba(255,255,255,0.8);
+        }
+
+        .left { left: 0; }
+        .right { left: 50%; }
+
+        .right::after {
+            left: -9px;
+        }
+
+        .timeline-content {
+            padding: 2.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+        }
+
+        .timeline-content h3 {
+            color: var(--accent-brown);
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Leave a Memory Form */
+        .memory-section {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .memory-form {
+            padding: 3.5rem;
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid transparent;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-brown);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(193, 154, 107, 0.15);
+        }
+
+        .submit-btn {
+            background-color: var(--accent-brown);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            font-family: inherit;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(193, 154, 107, 0.3);
+        }
+
+        .submit-btn:hover {
+            background-color: #B0885A;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(193, 154, 107, 0.4);
+        }
+
+        /* Footer & Candle Effect */
+        footer {
+            background: linear-gradient(to top, var(--bg-beige), var(--bg-cream));
+            text-align: center;
+            padding: 6rem 2rem 5rem;
+            position: relative;
+            margin-top: 2rem;
+        }
+        
+        .cat-silhouette {
+            font-size: 2.5rem;
+            opacity: 0.5;
+            margin-bottom: 2rem;
+        }
+
+        .candle-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .candle {
+            width: 40px;
+            height: 75px;
+            background: linear-gradient(to right, #f4f4f4, #e6e6e6, #f4f4f4);
+            border-radius: 4px;
+            position: relative;
+            box-shadow: inset 0 -5px 15px rgba(0,0,0,0.08), 0 5px 10px rgba(0,0,0,0.05);
+        }
+        
+        .candle::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: #ebebeb;
+            border-radius: 50%;
+        }
+        
+        .flame {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 32px;
+            background: radial-gradient(ellipse at bottom, #fffbb3 10%, #ffc14d 40%, #ff6600 80%, transparent 100%);
+            border-radius: 50% 50% 20% 20%;
+            animation: flicker 2.5s infinite alternate;
+            filter: drop-shadow(0 0 15px rgba(255, 193, 77, 0.85));
+            transform-origin: center bottom;
+        }
+        
+        .wick {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 10px;
+            background: #333;
+            border-radius: 2px;
+        }
+
+        footer p {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Floating Hearts */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -30px;
+            color: rgba(255, 255, 255, 0.6);
+            opacity: 0;
+            animation: floatUp linear forwards;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .heart.light-brown { color: rgba(193, 154, 107, 0.25); }
+        .heart.grey { color: rgba(138, 122, 110, 0.15); }
+
+        /* Keyframe Animations */
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 0.5; }
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.8) rotate(-10deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-105vh) scale(1.3) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) skewX(1deg); opacity: 0.9; }
+            25% { transform: translateX(-50%) scale(1.05) skewX(-1deg); opacity: 1; filter: drop-shadow(0 0 20px rgba(255, 193, 77, 0.9)); }
+            50% { transform: translateX(-50%) scale(0.95) skewX(2deg); opacity: 0.8; filter: drop-shadow(0 0 12px rgba(255, 193, 77, 0.7)); }
+            75% { transform: translateX(-50%) scale(1.02) skewX(-2deg); opacity: 0.95; }
+            100% { transform: translateX(-50%) scale(1) skewX(0deg); opacity: 0.9; }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .about {
+                flex-direction: column;
+                padding: 2.5rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 15px;
+            }
+            
+            .timeline-item::after {
+                left: 21px;
+            }
+            
+            .right {
+                left: 0%;
+            }
+            
+            .memory-form {
+                padding: 2.5rem 1.5rem;
+            }
+            
+            section {
+                padding: 4rem 1.5rem;
+            }
+        }
+
+        /* Enter Overlay */
+        .enter-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--bg-cream);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .enter-overlay p {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-top: 1rem;
+            animation: pulse-text 2s infinite alternate;
+        }
+
+        .enter-overlay .paw-icon {
+            font-size: 3rem;
+            color: var(--accent-brown);
+            opacity: 0.8;
+        }
+
+        @keyframes pulse-text {
+            0% { opacity: 0.6; transform: scale(0.98); }
+            100% { opacity: 1; transform: scale(1.02); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Enter Overlay to enable audio autoplay -->
+    <div class="enter-overlay" id="enter-overlay">
+        <div class="paw-icon">🐾</div>
+        <p class="serif">Click to enter Kit Kat's memorial</p>
+    </div>
+
+    <!-- Floating Hearts Container -->
+    <div class="hearts-container"></div>
+
+    <!-- Soft Background Music -->
+    <audio id="bg-music" loop autoplay>
+        <source src="soft_kitty.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <h1>In Loving Memory of Kit Kat</h1>
+        <p class="serif">"A beloved cat, a loyal friend, and a little soul who left paw prints on our hearts."</p>
+        <div class="paw-dec">🐾</div>
+    </header>
+
+    <!-- About Section -->
+    <section class="fade-in-section">
+        <div class="about glass-card">
+            <div class="about-img-wrapper">
+                <!-- Actual photo of Kit Kat -->
+                <img src="kitkat.jpg" alt="Kit Kat looking peaceful" class="about-img">
+            </div>
+            <div class="about-text">
+                <h2 class="section-title">About Kit Kat</h2>
+                <p>Kit Kat was more than just a pet; he was family. With his soft purrs and gentle headbutts, he brought warmth and comfort to every room he entered.</p>
+                <p>He loved basking in the afternoon sun, chasing after his favorite feather toy, and curling up for cozy naps on the softest blankets he could find.</p>
+                <p>His quirky personality and unconditional love made every day brighter. Though he may be gone from our sight, his memory will forever live on in our hearts, a quiet presence of love and joy.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="fade-in-section">
+        <h2 class="section-title">Precious Memories</h2>
+        <div class="gallery">
+            <!-- You can replace these with actual photos of Kit Kat: e.g., src="gallery1.jpg" -->
+            <img src="https://placecats.com/600/400" alt="Kit Kat Memory" class="gallery-img">
+            <img src="https://placecats.com/601/400" alt="Kit Kat Memory" class="gallery-img">
+            <img src="https://placecats.com/600/401" alt="Kit Kat Memory" class="gallery-img">
+            <img src="https://placecats.com/599/400" alt="Kit Kat Memory" class="gallery-img">
+            <img src="https://placecats.com/600/399" alt="Kit Kat Memory" class="gallery-img">
+            <img src="https://placecats.com/599/399" alt="Kit Kat Memory" class="gallery-img">
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="fade-in-section">
+        <h2 class="section-title">A Life Well Lived</h2>
+        <div class="timeline">
+            <div class="timeline-item left">
+                <div class="timeline-content glass-card">
+                    <h3>Welcome Home</h3>
+                    <p>The day Kit Kat joined our family, bringing endless joy, tiny meows, and a sudden need to hide all the shoelaces.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content glass-card">
+                    <h3>First Great Adventure</h3>
+                    <p>Exploring the garden for the very first time, bravely chasing butterflies and cautiously sniffing the flowers.</p>
+                </div>
+            </div>
+            <div class="timeline-item left">
+                <div class="timeline-content glass-card">
+                    <h3>Cozy Winters</h3>
+                    <p>Discovering the absolute bliss of the fireplace and officially claiming the best, softest spot in the house as his own.</p>
+                </div>
+            </div>
+            <div class="timeline-item right">
+                <div class="timeline-content glass-card">
+                    <h3>Forever in our Hearts</h3>
+                    <p>Saying goodbye to our dearest friend, wrapped in love, knowing his paw prints will remain on our hearts forever.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leave a Memory -->
+    <section class="fade-in-section memory-section">
+        <h2 class="section-title">Leave a Memory</h2>
+        <form class="memory-form glass-card" onsubmit="event.preventDefault(); alert('Thank you for sharing your beautiful memory of Kit Kat. 🐾'); this.reset();">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" required placeholder="How did you know Kit Kat?">
+            </div>
+            <div class="form-group">
+                <label for="memory">Your Favorite Memory</label>
+                <textarea id="memory" rows="5" required placeholder="I'll always remember the time when..."></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Share Memory</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="cat-silhouette">🐈</div>
+        
+        <div class="candle-container">
+            <div class="candle">
+                <div class="flame"></div>
+                <div class="wick"></div>
+            </div>
+        </div>
+        
+        <p class="serif">Forever loved. Forever remembered. 🐾</p>
+    </footer>
+
+    <script>
+        // --- Floating Hearts Animation Logic ---
+        function createHeart() {
+            const heartsContainer = document.querySelector('.hearts-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            
+            // Randomly choose heart color styles based on the CSS classes
+            const colors = ['', 'light-brown', 'grey'];
+            const type = Math.floor(Math.random() * 3);
+            
+            heart.innerHTML = '♥'; 
+            if(colors[type]) heart.classList.add(colors[type]);
+            
+            // Randomize starting position, duration, and size
+            const left = Math.random() * 100;
+            const duration = Math.random() * 6 + 8; // Between 8 and 14 seconds
+            const size = Math.random() * 0.8 + 0.6; // Between 0.6rem and 1.4rem
+            
+            heart.style.left = `${left}vw`;
+            heart.style.animationDuration = `${duration}s`;
+            heart.style.fontSize = `${size}rem`;
+            
+            heartsContainer.appendChild(heart);
+            
+            // Remove the heart element after its animation completes to keep DOM clean
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000);
+        }
+        
+        // Spawn a few initial hearts immediately
+        for(let i=0; i<6; i++) {
+            setTimeout(createHeart, Math.random() * 2000);
+        }
+        
+        // Continue generating a new heart every 2.5 seconds
+        setInterval(createHeart, 2500);
+
+        // --- Intersection Observer for Scroll Fade-in Animations ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15 // Trigger when 15% of the element is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Stop observing once it's visible
+                }
+            });
+        }, observerOptions);
+
+        // Attach observer to all elements with the fade-in-section class
+        document.querySelectorAll('.fade-in-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // --- Background Music Autoplay Logic ---
+        const bgMusic = document.getElementById('bg-music');
+        const enterOverlay = document.getElementById('enter-overlay');
+        
+        bgMusic.volume = 0.3; // Keep the volume soft and gentle
+        
+        // Browsers require a direct user interaction to play audio reliably. 
+        // This beautiful overlay ensures we get that interaction gracefully before showing the site.
+        enterOverlay.addEventListener('click', () => {
+            bgMusic.play().catch(err => console.log("Audio prevented:", err));
+            
+            // Fade out and remove overlay
+            enterOverlay.style.opacity = '0';
+            enterOverlay.style.visibility = 'hidden';
+            
+            // Allow scrolling on the body after entering
+            document.body.style.overflow = 'auto';
+            
+            setTimeout(() => {
+                enterOverlay.style.display = 'none';
+            }, 1000);
+        });
+        
+        // Prevent scrolling while overlay is active
+        document.body.style.overflow = 'hidden';
+    </script>
+</body>
+</html>
